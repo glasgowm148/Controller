@@ -248,46 +248,46 @@ public class Controller {
 	}
 	
 	private void initialiseVehicle(String vehicleName) {
-		if(vehicleName.equals("Boat")) {
-			vehicle = new Boat("Apollo ");
+		switch (vehicleName) {
+			case "Boat":
+				vehicle = new Boat("Apollo ");
+				break;
+			case "Ship":
+				vehicle = new Ship("Cruizz");
+				break;
+			case "Truck":
+				vehicle = new Truck("Ford F-650");
+				break;
+			case "Motorcycle":
+				vehicle = new Motorcycle("Suzuki");
+				break;
+			case "Bus":
+				vehicle = new Bus("Aero");
+				break;
+			case "Car":
+				vehicle = new Car("BMW");
+				break;
+			case "Bicycle":
+				vehicle = new Bicycle("A-bike");
+				break;
+			case "Helicopter":
+				vehicle = new Helicopter("Eurocopter");
+				break;
+			case "Airplane":
+				vehicle = new Airplane("BA");
+				break;
+			case "Tram":
+				vehicle = new Tram("EdinburghTram");
+				break;
+			case "Train":
+				vehicle = new Train("Virgin", 4);
+				break;
 		}
-		else if(vehicleName.equals("Ship")) {
-			vehicle = new Ship("Cruizz");
-		}
-		else if(vehicleName.equals("Truck")) {
-			vehicle = new Truck("Ford F-650");
-		}
-		else if(vehicleName.equals("Motorcycle")) {
-			vehicle = new Motorcycle("Suzuki");
-		}
-		else if(vehicleName.equals("Bus")) {
-			vehicle = new Bus("Aero");
-		}
-		else if(vehicleName.equals("Car")) {
-			vehicle = new Car("BMW");
-		}
-		else if(vehicleName.equals("Bicycle")) {
-			vehicle = new Bicycle("A-bike");
-		}
-		else if(vehicleName.equals("Helicopter")) {
-			vehicle = new Helicopter("Eurocopter");
-		}
-		else if(vehicleName.equals("Airplane")) {
-			vehicle = new Airplane("BA");
-		}
-		else if(vehicleName.equals("Tram")) {
-			vehicle = new Tram("EdinburghTram");
-		}
-		else if(vehicleName.equals("Train")) {
-			vehicle = new Train("Virgin",4);
-		}	 	
 	}
 
 
-	public class Simulator extends JPanel {
+	public class Simulator extends oose.vcs.Simulator {
 
-		private BufferedImage boat;
-		private int xPos = 0;
 		private int direction = 1;
 		private File file; 
 		private Timer timer;
@@ -319,21 +319,6 @@ public class Controller {
 			timer.setDelay(maximumvelocity/currentvelocity);
 		}
 
-
-
-		@Override
-		public Dimension getPreferredSize() {
-			return boat == null ? super.getPreferredSize() : new Dimension(boat.getWidth() * 4, boat.getHeight());
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-
-			int y = getHeight() - boat.getHeight();
-			g.drawImage(boat, xPos, y, this);
-
-		}
 
 	}
 

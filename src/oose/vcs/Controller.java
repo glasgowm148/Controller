@@ -49,8 +49,8 @@ public class Controller {
 	private JComboBox<String> combobox;
 	private JFrame frame;
 	private Motion motion;
+    private Timer timer;
 
-	private boolean accelerate, decelerate, cruise,stop;
 	int currentvelocity = 1;
 	int maximumvelocity = 300;
 
@@ -118,34 +118,30 @@ public class Controller {
 	public void moveIt(Motion motion){
         Thread thread = new Thread(() -> {
             try {
-                while(motion == Motion.ACCELERATE || motion == Motion.DECELERATE) {
+                while (this.motion != Motion.STOP) {
                     Thread.sleep(2 * 1000);
 
-                    if(currentvelocity<=maximumvelocity) {
-                        currentvelocity = currentvelocity +1;
-                        vehicle.setCurrentSpeed(currentvelocity);
-                        speedlabel.setText(vehicle.printSpeed());
-                        simulationPane.timer.setDelay(maximumvelocity/currentvelocity);
-                    }
-                    else {
-                        if (currentvelocity <= 1) {
-                            continue;
-                        }
-                        currentvelocity = currentvelocity -1;
-                        vehicle.setCurrentSpeed(currentvelocity);
-                        speedlabel.setText(vehicle.printSpeed());
-                        simulationPane.timer.setDelay(maximumvelocity/currentvelocity);
-                    }
+                    if (currentvelocity != 0) timer.setDelay(maximumvelocity / currentvelocity);
+                    else timer.setDelay(maximumvelocity);
+
+                    if ((this.motion == Motion.ACCELERATE) && (currentvelocity <= maximumvelocity) ) {  ++currentvelocity; }
+                    else if ((this.motion == Motion.DECELERATE) && (currentvelocity >= 1) ) {  --currentvelocity;  }
 
 
+                    vehicle.setCurrentSpeed(currentvelocity);
+                    speedlabel.setText(vehicle.printSpeed());
 
                 }
 
+                currentvelocity = 0;
+                vehicle.setCurrentSpeed(currentvelocity);
+
+
+
+            } catch (InterruptedException e1) {
+                    e1.printStackTrace();
             }
 
-            catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
         });
 
         thread.start();
@@ -170,7 +166,6 @@ public class Controller {
 
             setButton(button1);
 
-
 			simulationPane = new Simulator();
 			frame.add(simulationPane,BorderLayout.CENTER);
 			frame.revalidate();
@@ -181,13 +176,10 @@ public class Controller {
 	private void configAccelerate() {
 		button2 = new JButton("accelerate");
 		button2.setBackground(Color.lightGray);
+
 		button2.addActionListener(e -> {
-            this.motion = Motion.ACCELERATE;
-
-
+		    this.motion = Motion.ACCELERATE;
             setButton(button2);
-
-
             moveIt(this.motion);
 		});
 
@@ -196,43 +188,33 @@ public class Controller {
 	private void configCruise() {
 		button3 = new JButton("cruise");
 		button3.setBackground(Color.lightGray);
+
 		button3.addActionListener(e -> {
             this.motion = Motion.CRUISE;
-
-
             setButton(button3);
+		});
 
-
-        });
 	}
 	private void configDecelerate() {
         button4 = new JButton("decelerate");
         button4.setBackground(Color.lightGray);
+
         button4.addActionListener(e -> {
             this.motion = Motion.DECELERATE;
-
-
             setButton(button4);
-
-
             moveIt(this.motion);
         });
+
     }
 	
 	private void configStop() {
 		button5 = new JButton("stop");
 		button5.setBackground(Color.lightGray);
+
 		button5.addActionListener(e -> {
             this.motion = Motion.STOP;
-
-
             setButton(button5);
-
-
-            currentvelocity = 1;
-			vehicle.setCurrentSpeed(currentvelocity);
-			speedlabel.setText(vehicle.printSpeed());
-			simulationPane.updateTimer();
+            moveIt(this.motion);
 		});
 	}
 	
@@ -279,7 +261,7 @@ public class Controller {
 
 		private int direction = 1;
 		private File file; 
-		private Timer timer;
+
 		public Simulator() {
 			file = new File(System.getProperty("user.dir")+ "/img/" + vehicle.getClass().getSimpleName().toLowerCase() + ".png");
 			try {	
@@ -304,9 +286,7 @@ public class Controller {
 			}
 		}
 
-		public void updateTimer() {
-			timer.setDelay(maximumvelocity/currentvelocity);
-		}
+
 
 
 	}

@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class Simulator extends JPanel {
     protected BufferedImage boat;
-    protected int xPos = 0;
+    protected int xPos = 1;
 
     @Override
     public Dimension getPreferredSize() {

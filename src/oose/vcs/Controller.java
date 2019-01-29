@@ -48,6 +48,7 @@ public class Controller {
 	private JButton button5;
 	private JComboBox<String> combobox;
 	private JFrame frame;
+	private Motion motion;
 
 	private boolean accelerate, decelerate, cruise,stop;
 	int currentvelocity = 1;
@@ -58,6 +59,7 @@ public class Controller {
 	}
 
 	public Controller() {
+
 		EventQueue.invokeLater(() -> {
 			try {
 				UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
@@ -102,6 +104,54 @@ public class Controller {
 			frame.setVisible(true);
 		});
 	}
+
+	private void setButton(JButton CurrentButton) {
+		button1.setBackground(Color.lightGray);
+		button2.setBackground(Color.lightGray);
+		button3.setBackground(Color.lightGray);
+		button4.setBackground(Color.lightGray);
+		button5.setBackground(Color.lightGray);
+
+		CurrentButton.setBackground(Color.green);
+	}
+
+	public void moveIt(Motion motion){
+        Thread thread = new Thread(() -> {
+            try {
+                while(motion == Motion.ACCELERATE || motion == Motion.DECELERATE) {
+                    Thread.sleep(2 * 1000);
+
+                    if(currentvelocity<=maximumvelocity) {
+                        currentvelocity = currentvelocity +1;
+                        vehicle.setCurrentSpeed(currentvelocity);
+                        speedlabel.setText(vehicle.printSpeed());
+                        simulationPane.timer.setDelay(maximumvelocity/currentvelocity);
+                    }
+                    else {
+                        if (currentvelocity <= 1) {
+                            continue;
+                        }
+                        currentvelocity = currentvelocity -1;
+                        vehicle.setCurrentSpeed(currentvelocity);
+                        speedlabel.setText(vehicle.printSpeed());
+                        simulationPane.timer.setDelay(maximumvelocity/currentvelocity);
+                    }
+
+
+
+                }
+
+            }
+
+            catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        thread.start();
+    }
+
+
 	
 	private void configStart() {
 		button1 = new JButton("start");
@@ -116,15 +166,10 @@ public class Controller {
 			if(simulationPane !=null) {
 				frame.remove(simulationPane);
 			}
-			accelerate = false;
-			decelerate = false;
-			cruise = false;
-			stop = false;
-			button1.setBackground(Color.GREEN);
-			button2.setBackground(Color.lightGray);
-			button3.setBackground(Color.lightGray);
-			button4.setBackground(Color.lightGray);
-			button5.setBackground(Color.lightGray);
+            this.motion = Motion.FALSE;
+
+            setButton(button1);
+
 
 			simulationPane = new Simulator();
 			frame.add(simulationPane,BorderLayout.CENTER);
@@ -137,36 +182,13 @@ public class Controller {
 		button2 = new JButton("accelerate");
 		button2.setBackground(Color.lightGray);
 		button2.addActionListener(e -> {
-			accelerate = true;
-			decelerate = false;
-			cruise = false;
-			stop = false;
+            this.motion = Motion.ACCELERATE;
 
-			button1.setBackground(Color.lightGray);
-			button2.setBackground(Color.green);
-			button3.setBackground(Color.lightGray);
-			button4.setBackground(Color.lightGray);
-			button5.setBackground(Color.lightGray);
 
-			Thread thread = new Thread(() -> {
-				try {
-					while(accelerate) {
-						Thread.sleep(2 * 1000);
+            setButton(button2);
 
-						if(currentvelocity<=maximumvelocity) {
-							currentvelocity = currentvelocity +1;
-							vehicle.setCurrentSpeed(currentvelocity);
-							speedlabel.setText(vehicle.printSpeed());
-							simulationPane.updateTimer();
-						}
-					}
-				}
-				catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			});
 
-			thread.start();
+            moveIt(this.motion);
 		});
 
 	}
@@ -175,72 +197,39 @@ public class Controller {
 		button3 = new JButton("cruise");
 		button3.setBackground(Color.lightGray);
 		button3.addActionListener(e -> {
-			accelerate = false;
-			decelerate = false;
-			cruise = true;
-			stop = false;
+            this.motion = Motion.CRUISE;
 
-			button1.setBackground(Color.lightGray);
-			button2.setBackground(Color.lightGray);
-			button3.setBackground(Color.green);
-			button4.setBackground(Color.lightGray);
-			button5.setBackground(Color.lightGray);
 
-		});
+            setButton(button3);
+
+
+        });
 	}
 	private void configDecelerate() {
-		button4 = new JButton("decelerate");
-		button4.setBackground(Color.lightGray);
-		button4.addActionListener(e -> {
-			accelerate = false;
-			decelerate = true;
-			cruise = false;
-			stop = false;
+        button4 = new JButton("decelerate");
+        button4.setBackground(Color.lightGray);
+        button4.addActionListener(e -> {
+            this.motion = Motion.DECELERATE;
 
-			button1.setBackground(Color.lightGray);
-			button2.setBackground(Color.lightGray);
-			button3.setBackground(Color.lightGray);
-			button4.setBackground(Color.green);
-			button5.setBackground(Color.lightGray);
 
-			Thread thread = new Thread(() -> {
-				try {
-					while(decelerate) {
-						Thread.sleep(2 * 1000);
+            setButton(button4);
 
-						if(currentvelocity >1) {
-							currentvelocity = currentvelocity -1;
-							vehicle.setCurrentSpeed(currentvelocity);
-							speedlabel.setText(vehicle.printSpeed());
-							simulationPane.updateTimer();
-						}
-					}
-				}
-				catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			});
 
-			thread.start();
-		});
-	}
+            moveIt(this.motion);
+        });
+    }
 	
 	private void configStop() {
 		button5 = new JButton("stop");
 		button5.setBackground(Color.lightGray);
 		button5.addActionListener(e -> {
-			accelerate = false;
-			decelerate = false;
-			cruise = false;
-			stop = true;
+            this.motion = Motion.STOP;
 
-			button1.setBackground(Color.lightGray);
-			button2.setBackground(Color.lightGray);
-			button3.setBackground(Color.lightGray);
-			button4.setBackground(Color.lightGray);
-			button5.setBackground(Color.green);
 
-			currentvelocity = 1;
+            setButton(button5);
+
+
+            currentvelocity = 1;
 			vehicle.setCurrentSpeed(currentvelocity);
 			speedlabel.setText(vehicle.printSpeed());
 			simulationPane.updateTimer();
@@ -322,4 +311,8 @@ public class Controller {
 
 	}
 
+}
+
+enum Motion {
+    ACCELERATE, DECELERATE, CRUISE, STOP, FALSE
 }

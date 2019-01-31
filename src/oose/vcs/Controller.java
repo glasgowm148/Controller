@@ -1,34 +1,12 @@
 package oose.vcs;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import java.io.File;
-import java.io.IOException;
+import vehicle.types.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JToolBar;
-import javax.swing.Timer;
-import javax.swing.UIManager;
-
-import vehicle.types.Airplane;
-import vehicle.types.Bicycle;
-import vehicle.types.Boat;
-import vehicle.types.Bus;
-import vehicle.types.Car;
-import vehicle.types.Helicopter;
-import vehicle.types.Motorcycle;
-import vehicle.types.Ship;
-import vehicle.types.Train;
-import vehicle.types.Tram;
-import vehicle.types.Truck;
-import vehicle.types.Vehicle;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Controller {
@@ -37,14 +15,15 @@ public class Controller {
 	private String[] vehicles = { "Boat", "Ship", "Truck", "Motorcycle", "Bus", "Car", "Bicycle", "Helicopter", "Airplane", "Tram", "Train"};
 	private Simulator simulationPane;
 	private JLabel speedLabel;
-	private JButton button1;
-	private JButton button2;
-	private JButton button3;
-	private JButton button4;
-	private JButton button5;
-	private JComboBox<String> comboBox;
+
+    private JButton bStart = new JButton("start");
+    private JButton bAccel = new JButton("accelerate");
+    private JButton bCruise = new JButton("cruise");
+    private JButton bDecel = new JButton("decelerate");
+    private JButton bStop = new JButton("stop");
+
+    private JComboBox <String> comboBox;
 	private JFrame frame;
-	private Motion motion;
 	private Timer timer;
 
 	private int currentVelocity = 1;
@@ -72,22 +51,36 @@ public class Controller {
 
 			speedLabel = new JLabel("          ");
 
-			configStart();
-			configAccelerate();
-			configDecelerate();
-			configCruise();
-			configStop();
 
-			JToolBar toolBar =new JToolBar();
-			toolBar.setRollover(true);
+            if (vehicle == null) {
+                initialiseVehicle(vehicles[comboBox.getSelectedIndex()]);
+                speedLabel.setText(vehicle.printSpeed());
+            }
+            if (simulationPane != null) frame.remove(simulationPane);
 
-			toolBar.add(comboBox);
-			toolBar.add(speedLabel);
-			toolBar.add(button1);
-			toolBar.add(button2);
-			toolBar.add(button3);
-			toolBar.add(button4);
-			toolBar.add(button5);
+            simulationPane = new Simulator();
+            frame.add(simulationPane, BorderLayout.CENTER);
+            frame.revalidate();
+            frame.repaint();
+
+            JToolBar toolBar = new JToolBar();
+            toolBar.setRollover(true);
+
+            config(bStart, Motion.FALSE);
+
+            config(bAccel, Motion.ACCELERATE);
+            config(bCruise, Motion.CRUISE);
+            config(bDecel, Motion.DECELERATE);
+            config(bStop, Motion.STOP);
+
+            toolBar.add(comboBox);
+            toolBar.add(speedLabel);
+            toolBar.add(bStart);
+            toolBar.add(bAccel);
+            toolBar.add(bCruise);
+            toolBar.add(bDecel);
+            toolBar.add(bStop);
+
 
 			frame.add(toolBar,BorderLayout.NORTH);
 			frame.setPreferredSize(new Dimension(800,200));
@@ -98,11 +91,11 @@ public class Controller {
 	}
 
 	private void setButton(JButton CurrentButton) {
-		button1.setBackground(Color.lightGray);
-		button2.setBackground(Color.lightGray);
-		button3.setBackground(Color.lightGray);
-		button4.setBackground(Color.lightGray);
-		button5.setBackground(Color.lightGray);
+        bStart.setBackground(Color.lightGray);
+        bAccel.setBackground(Color.lightGray);
+        bCruise.setBackground(Color.lightGray);
+        bDecel.setBackground(Color.lightGray);
+        bStop.setBackground(Color.lightGray);
 
 		CurrentButton.setBackground(Color.green);
 	}
@@ -110,13 +103,13 @@ public class Controller {
 	private void moveIt(Motion m){
 		(new Thread(() -> {
 			try {
-				for (; this.motion != Motion.STOP; speedLabel.setText(vehicle.printSpeed())) {
+                for (; m != Motion.STOP; speedLabel.setText(vehicle.printSpeed())) {
 					Thread.sleep(2000);
 					timer.setDelay(currentVelocity == 0 ? maximumVelocity : maximumVelocity / currentVelocity);
 
-					if ((this.motion == Motion.ACCELERATE) && (currentVelocity <= maximumVelocity))
+                    if ((m == Motion.ACCELERATE) && (currentVelocity <= maximumVelocity))
 						++currentVelocity;
-					else if ((this.motion == Motion.DECELERATE) && (currentVelocity >= 1))
+                    else if ((m == Motion.DECELERATE) && (currentVelocity >= 1))
 						--currentVelocity;
 					vehicle.setCurrentSpeed(currentVelocity);
 				}
@@ -129,72 +122,14 @@ public class Controller {
 	}
 
 
-
-	private void configStart() {
-		button1 = new JButton("start");
-		button1.setBackground(Color.lightGray);
-		button1.addActionListener(e -> {
-			if(vehicle == null) {
-				initialiseVehicle(vehicles[comboBox.getSelectedIndex()]);
-				speedLabel.setText(vehicle.printSpeed());
-			}
-			if(simulationPane !=null)
-				frame.remove(simulationPane);
-			this.motion = Motion.FALSE;
-
-			setButton(button1);
-
-			simulationPane = new Simulator();
-			frame.add(simulationPane,BorderLayout.CENTER);
-			frame.revalidate();
-			frame.repaint();
-		});
-	}
-
-	private void configAccelerate() {
-		button2 = new JButton("accelerate");
-		button2.setBackground(Color.lightGray);
-
-		button2.addActionListener(e -> {
-			this.motion = Motion.ACCELERATE;
-			setButton(button2);
-			moveIt(this.motion);
+    private void config(JButton button, Motion m) {
+        button.addActionListener(e -> {
+            moveIt(m);
+            setButton(button);
 		});
 
 	}
 
-	private void configCruise() {
-		button3 = new JButton("cruise");
-		button3.setBackground(Color.lightGray);
-
-		button3.addActionListener(e -> {
-			this.motion = Motion.CRUISE;
-			setButton(button3);
-		});
-
-	}
-	private void configDecelerate() {
-		button4 = new JButton("decelerate");
-		button4.setBackground(Color.lightGray);
-
-		button4.addActionListener(e -> {
-			this.motion = Motion.DECELERATE;
-			setButton(button4);
-			moveIt(this.motion);
-		});
-
-	}
-
-	private void configStop() {
-		button5 = new JButton("stop");
-		button5.setBackground(Color.lightGray);
-
-		button5.addActionListener(e -> {
-			this.motion = Motion.STOP;
-			setButton(button5);
-			moveIt(this.motion);
-		});
-	}
 
 	private void initialiseVehicle(String vehicleName) {
 		switch (vehicleName) {

@@ -6,14 +6,15 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f98c6542-20a8-476c-9c01-37991be52ffd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/oose/vcs/TestButton.java" afterDir="false" />
+    <list default="true" id="f98c6542-20a8-476c-9c01-37991be52ffd" name="Default Changelist" comment="redrawing colour on run - still thread infighting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/VehicleControlSystem_jar/VehicleControlSystem.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/VehicleControlSystem_jar/VehicleControlSystem.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Controller$Simulator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Motion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Simulator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VehicleControlSystem/oose/vcs/Simulator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/oose/vcs/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/oose/vcs/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/oose/vcs/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/oose/vcs/Simulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/oose/vcs/TestButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/oose/vcs/ButtonSetup.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,14 +49,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3066" />
-          <entry key="txt" value="100" />
+          <entry key="java" value="3333" />
+          <entry key="txt" value="158" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3066" />
-          <entry key="PLAIN_TEXT" value="100" />
+          <entry key="JAVA" value="3333" />
+          <entry key="PLAIN_TEXT" value="158" />
         </counts>
       </usages-collector>
     </session>
@@ -82,9 +83,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/oose/vcs/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+            <state relative-caret-position="615">
+              <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#959#960#0" expanded="true" />
                 <element signature="e#991#992#0" expanded="true" />
               </folding>
@@ -93,18 +95,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/oose/vcs/TestButton.java">
+        <entry file="file://$PROJECT_DIR$/src/oose/vcs/Simulator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="734">
+              <caret line="57" column="11" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#244#245#0" expanded="true" />
-                <element signature="e#278#279#0" expanded="true" />
-                <element signature="e#1035#1036#0" expanded="true" />
-                <element signature="e#1086#1087#0" expanded="true" />
-                <element signature="e#1285#1286#0" expanded="true" />
-                <element signature="e#1338#1339#0" expanded="true" />
+                <element signature="e#1290#1291#0" expanded="true" />
+                <element signature="e#1355#1356#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/oose/vcs/ButtonSetup.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,15 +125,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
               <caret line="56" column="14" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/oose/vcs/Simulator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="12" column="110" lean-forward="true" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -158,6 +159,7 @@
       <find>speedlabel</find>
       <find>speedla</find>
       <find>vehicleName</find>
+      <find>moveIt</find>
       <find>model</find>
     </findStrings>
   </component>
@@ -167,8 +169,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/oose/vcs/Simulator.java" />
         <option value="$PROJECT_DIR$/src/oose/vcs/TestButton.java" />
+        <option value="$PROJECT_DIR$/src/oose/vcs/ButtonSetup.java" />
+        <option value="$PROJECT_DIR$/src/oose/vcs/Simulator.java" />
         <option value="$PROJECT_DIR$/src/oose/vcs/Controller.java" />
       </list>
     </option>
@@ -276,7 +279,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549291362090" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549298022443" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -332,7 +335,7 @@
       <workItem from="1548779997430" duration="2684000" />
       <workItem from="1548784175331" duration="9004000" />
       <workItem from="1548894778548" duration="8810000" />
-      <workItem from="1549270533859" duration="15152000" />
+      <workItem from="1549270533859" duration="20452000" />
     </task>
     <task id="LOCAL-00001" summary="test from intelliJ">
       <created>1548782324969</created>
@@ -355,11 +358,18 @@
       <option name="project" value="LOCAL" />
       <updated>1548939567175</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="redrawing colour on run - still thread infighting">
+      <created>1549291406418</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1549291406418</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35851000" />
+    <option name="totallyTimeSpent" value="41151000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -381,9 +391,10 @@
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.5006748" side_tool="true" weight="0.14835165" />
+      <window_info active="true" anchor="bottom" id="Inspection Results" visible="true" weight="0.13163266" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.24387754" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22755101" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22755101" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -446,7 +457,8 @@
     <MESSAGE value="tidy up" />
     <MESSAGE value="tidy up + eclipse refactors" />
     <MESSAGE value="combined all the configs - still some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="combined all the configs - still some bugs" />
+    <MESSAGE value="redrawing colour on run - still thread infighting" />
+    <option name="LAST_COMMIT_MESSAGE" value="redrawing colour on run - still thread infighting" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -493,13 +505,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/oose/vcs/Simulator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="110" lean-forward="true" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/vehicle/types/Vehicle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -507,27 +512,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/oose/vcs/TestButton.java">
+    <entry file="file://$PROJECT_DIR$/src/oose/vcs/ButtonSetup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="224">
+          <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="43" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#244#245#0" expanded="true" />
-            <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#1035#1036#0" expanded="true" />
-            <element signature="e#1086#1087#0" expanded="true" />
-            <element signature="e#1285#1286#0" expanded="true" />
-            <element signature="e#1338#1339#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/oose/vcs/Simulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="734">
+          <caret line="57" column="11" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1290#1291#0" expanded="true" />
+            <element signature="e#1355#1356#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/oose/vcs/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
+        <state relative-caret-position="615">
+          <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#959#960#0" expanded="true" />
             <element signature="e#991#992#0" expanded="true" />
           </folding>

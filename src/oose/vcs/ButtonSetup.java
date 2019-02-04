@@ -3,7 +3,7 @@ package oose.vcs;
 import javax.swing.*;
 import java.awt.*;
 
-public class TestButton {
+class ButtonSetup {
 
     protected JFrame createAndShowGUI(JFrame frame, JToolBar toolBar) {
 
@@ -28,19 +28,6 @@ public class TestButton {
         Controller.config( bStop );
 
 
-        bStart.setPressedBackgroundColor( Color.GREEN );
-        bAccel.setPressedBackgroundColor( Color.GREEN );
-        bCruise.setPressedBackgroundColor( Color.GREEN );
-        bDecel.setPressedBackgroundColor( Color.GREEN );
-        bStop.setPressedBackgroundColor( Color.GREEN );
-
-        bStart.setHoverBackgroundColor( Color.lightGray );
-        bAccel.setHoverBackgroundColor( Color.lightGray );
-        bCruise.setHoverBackgroundColor( Color.lightGray );
-        bDecel.setHoverBackgroundColor( Color.lightGray );
-        bStop.setHoverBackgroundColor( Color.lightGray );
-
-
         frame.add( toolBar, BorderLayout.NORTH );
 
         return frame;
@@ -50,12 +37,11 @@ public class TestButton {
 
     class MyButton extends JButton {
 
-        private Color hoverBackgroundColor;
-        private Color pressedBackgroundColor;
 
-        public MyButton() {
+
+     /*   public MyButton() {
             this( null );
-        }
+        } */
 
         public MyButton(String text) {
             super( text );
@@ -64,10 +50,11 @@ public class TestButton {
 
         @Override
         public void paintComponent(Graphics g) {
-            if (getModel().isPressed()) {
-                g.setColor( pressedBackgroundColor );
+            if (getModel().isPressed() || getModel().isSelected()) {
+                g.setColor( Color.GREEN );
+
             } else if (getModel().isRollover()) {
-                g.setColor( hoverBackgroundColor );
+                g.setColor( Color.lightGray );
             } else {
                 g.setColor( getBackground() );
             }
@@ -79,21 +66,9 @@ public class TestButton {
         public void setContentAreaFilled(boolean b) {
         }
 
-        public Color getHoverBackgroundColor() {
-            return hoverBackgroundColor;
-        }
 
-        public void setHoverBackgroundColor(Color hoverBackgroundColor) {
-            this.hoverBackgroundColor = hoverBackgroundColor;
-        }
 
-        public Color getPressedBackgroundColor() {
-            return pressedBackgroundColor;
-        }
 
-        public void setPressedBackgroundColor(Color pressedBackgroundColor) {
-            this.pressedBackgroundColor = pressedBackgroundColor;
-        }
     }
 
 

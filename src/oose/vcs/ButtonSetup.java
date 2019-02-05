@@ -5,27 +5,35 @@ import java.awt.*;
 
 class ButtonSetup {
 
-    protected JFrame createAndShowGUI(JFrame frame, JToolBar toolBar) {
+    JFrame createAndShowButton(JFrame frame, JToolBar toolBar) {
 
 
         final MyButton bStart = new MyButton( "Start" );
-        final MyButton bAccel = new MyButton( "Accelerate" );
+        final MyButton bAccelerate = new MyButton( "Accelerate" );
         final MyButton bCruise = new MyButton( "Cruise" );
-        final MyButton bDecel = new MyButton( "Decelerate" );
+        final MyButton bDecelerate = new MyButton( "Decelerate" );
         final MyButton bStop = new MyButton( "Stop" );
 
 
         toolBar.add( bStart );
-        toolBar.add( bAccel );
+        toolBar.add( bAccelerate );
         toolBar.add( bCruise );
-        toolBar.add( bDecel );
+        toolBar.add( bDecelerate );
         toolBar.add( bStop );
 
         Controller.config( bStart );
-        Controller.config( bAccel );
+        Controller.config( bAccelerate );
         Controller.config( bCruise );
-        Controller.config( bDecel );
+        Controller.config( bDecelerate );
         Controller.config( bStop );
+
+        //Group the radio buttons.
+        ButtonGroup group = new ButtonGroup();
+        group.add( bStart );
+        group.add( bAccelerate );
+        group.add( bCruise );
+        group.add( bDecelerate );
+        group.add( bStop );
 
 
         frame.add( toolBar, BorderLayout.NORTH );
@@ -35,15 +43,9 @@ class ButtonSetup {
 
     }
 
-    class MyButton extends JButton {
+    class MyButton extends JToggleButton {
 
-
-
-     /*   public MyButton() {
-            this( null );
-        } */
-
-        public MyButton(String text) {
+        MyButton(String text) {
             super( text );
             super.setContentAreaFilled( false );
         }

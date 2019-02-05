@@ -12,22 +12,23 @@ import java.io.IOException;
 
 class Simulator extends JPanel {
 
-    static int MAXIMUM_VELOCITY = 300;
+    private static final int MAXIMUM_VELOCITY = 300;
     private static Timer timer;
-    private final int currentVelocity = 1;
-    private BufferedImage boat;
+    private BufferedImage currentObj;
     private int xPos = 0;
     private int direction = 1;
-    private File file;
 
     public Simulator(Vehicle vehicle) {
-        file = new File( System.getProperty( "user.dir" ) + "/img/" + vehicle.getClass().getSimpleName().toLowerCase() + ".png" );
         try {
-            boat = ImageIO.read( file );
+            currentObj = ImageIO.read( new File( System.getProperty( "user.dir" ) + "/img/" + vehicle.getClass().getSimpleName().toLowerCase() + ".png" ) );
 
+            int currentVelocity = 1;
             timer = new Timer( MAXIMUM_VELOCITY / currentVelocity, e -> {
-                xPos += direction;
-                if (xPos + boat.getWidth() > getWidth()) {
+                if (vehicle.getCurrentSpeed() > 0) {
+                    xPos += direction;
+                }
+
+                if (xPos + currentObj.getWidth() > getWidth()) {
                     xPos = 0;
                     direction *= -1;
 
@@ -46,21 +47,29 @@ class Simulator extends JPanel {
     }
 
 
-    public static void updateTimer(int currentVelocity) {
+    static void updateTimer(int currentVelocity) {
+
         timer.setDelay( MAXIMUM_VELOCITY / currentVelocity );
+        if (!timer.isRunning()) {
+            timer.start();
+        }
+    }
+
+    static void StopTimer() {
+        timer.stop();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return boat == null ? super.getPreferredSize() : new Dimension(boat.getWidth() * 4, boat.getHeight());
+        return currentObj == null ? super.getPreferredSize() : new Dimension( currentObj.getWidth() * 4, currentObj.getHeight() );
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int y = getHeight() - boat.getHeight();
-        g.drawImage(boat, xPos, y, this);
+        int y = getHeight() - currentObj.getHeight();
+        g.drawImage( currentObj, xPos, y, this );
 
     }
 

@@ -4,6 +4,7 @@ import vehicle.types.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class Controller {
 
@@ -36,7 +37,9 @@ public class Controller {
                 initialiseVehicle( vehicles[comboBox.getSelectedIndex()] );
                 speedLabel.setText( vehicle.printSpeed() );
             }
-            if (simulationPane != null) frame.remove( simulationPane );
+            if (simulationPane != null) {
+                frame.remove( simulationPane );
+            }
 
 
             simulationPane = new Simulator( vehicle );
@@ -53,7 +56,7 @@ public class Controller {
             toolBar.add(comboBox);
             toolBar.add(speedLabel);
 
-            frame = new ButtonSetup().createAndShowGUI( frame, toolBar );
+            frame = new ButtonSetup().createAndShowButton( frame, toolBar );
 
             frame.setPreferredSize( new Dimension( 800, 200 ) );
             frame.pack();
@@ -68,21 +71,30 @@ public class Controller {
         new Controller();
     }
 
-    private static void setVelocity(JButton currentButton) {
+    private static void setVelocity(JToggleButton currentButton, ActionEvent e) {
         new Thread( () -> {
             try {
-                for (; !currentButton.getText().equals( "Stop" ); speedLabel.setText( vehicle.printSpeed() )) {
-                    Thread.sleep( 2000 );
 
-                    if ((currentButton.getText().equals( "Accelerate" )) && (currentVelocity <= MAXIMUM_VELOCITY))
-                        ++currentVelocity;
-                    else if ((currentButton.getText().equals( "Decelerate" )) && (currentVelocity >= 1))
-                        --currentVelocity;
+                for (; !currentButton.getText().equals( "Stop" ) && currentButton.isSelected(); speedLabel.setText( vehicle.printSpeed() )) {
+                    Thread.sleep( 2000 );
+                    if ((currentButton.getText().equals( "Accelerate" )) && currentButton.isSelected() && (currentVelocity <= MAXIMUM_VELOCITY))
+                        currentVelocity++;
+                    else if ((currentButton.getText().equals( "Decelerate" )) && currentButton.isSelected() && (currentVelocity >= 1))
+                        currentVelocity--;
+                    else if ((currentButton.getText().equals( "Start" )) && currentButton.isSelected())
+                        currentVelocity = 1;
                     vehicle.setCurrentSpeed( currentVelocity );
+                    if (currentVelocity != 0) {
+                        Simulator.updateTimer( currentVelocity );
+                    } else {
+                        Simulator.StopTimer();
+                    }
                 }
-                currentVelocity = 0;
-                vehicle.setCurrentSpeed( currentVelocity );
-                Simulator.updateTimer( currentVelocity == 0 ? MAXIMUM_VELOCITY : MAXIMUM_VELOCITY / currentVelocity );
+                if (currentButton.getText().equals( "Stop" ) && currentButton.isSelected()) {
+                    currentVelocity = 0;
+                    vehicle.setCurrentSpeed( currentVelocity );
+                    Simulator.StopTimer();
+                }
 
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
@@ -91,8 +103,8 @@ public class Controller {
     }
 
 
-    static void config(JButton currentButton) {
-        currentButton.addActionListener( e -> setVelocity( currentButton ) );
+    static void config(JToggleButton currentButton) {
+        currentButton.addActionListener( e -> setVelocity( currentButton, e ) );
 
     }
 
